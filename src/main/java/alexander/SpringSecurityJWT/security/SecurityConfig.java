@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -24,6 +25,7 @@ import alexander.SpringSecurityJWT.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     @Autowired
@@ -48,6 +50,8 @@ public class SecurityConfig {
                     auth
                     .requestMatchers("/hello")
                     .permitAll()
+                    //.requestMatchers("/accessAdmin")
+                    //.hasAnyRole("ADMIN", "USER")
                     .anyRequest()
                     .authenticated()
                 )
