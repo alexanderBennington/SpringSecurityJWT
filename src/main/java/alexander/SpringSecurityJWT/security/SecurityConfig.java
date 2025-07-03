@@ -11,10 +11,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import alexander.SpringSecurityJWT.security.filters.JwtAuthenticationFilter;
+import alexander.SpringSecurityJWT.security.filters.JwtAuthorizationFilter;
 import alexander.SpringSecurityJWT.security.jwt.JwtUtils;
 //import alexander.SpringSecurityJWT.service.UserDetailsServiceImpl;
+import alexander.SpringSecurityJWT.service.UserDetailsServiceImpl;
 
 //import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -24,10 +27,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class SecurityConfig {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
     private JwtUtils jwtUtils;
+    
+    @Autowired
+    private JwtAuthorizationFilter jwtAuthorizationFilter;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity, AuthenticationManager authenticationManager) throws Exception{
@@ -51,6 +57,7 @@ public class SecurityConfig {
                 )
                 //.httpBasic(withDefaults())
                 .addFilter(jwtAuthenticationFilter)
+                .addFilterBefore(jwtAuthorizationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 /*
