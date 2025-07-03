@@ -36,7 +36,7 @@ public class SecurityConfig {
                 .httpBasic(withDefaults())
                 .build();
     }
-
+/*
     @Bean
     UserDetailsService userDetailsService(){
         InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
@@ -47,7 +47,7 @@ public class SecurityConfig {
         );
         return manager;
     }
-
+*/
     @Bean
     PasswordEncoder passwordEncoder(){
         //return NoOpPasswordEncoder.getInstance();
